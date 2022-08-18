@@ -1,10 +1,20 @@
-import './App.css';
+import Home from './pages/Home'
+import LandingPage from './pages/LandingPage';
+import DetailCountries from './pages/DetailCountries';
+
+import { BrowserRouter , Route , Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Henry Countries</h1>
-    </div>
+
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/detail/:id" element={<DetailCountries />} />
+    </Routes>
+  </BrowserRouter>
+
   );
 }
 

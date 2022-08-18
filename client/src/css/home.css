@@ -1,0 +1,16 @@
+.barPagination {
+    width: 100%;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardsContainer {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(315px, 1fr));
+    grid-auto-rows: minmax(332px, auto);
+    gap: 25px;
+    justify-items: center;
+}
