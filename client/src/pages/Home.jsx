@@ -3,7 +3,7 @@ import Card from '../components/Card'
 import Paginado from '../components/Paginado'
 import NavBar from '../components/NavBar'
 import { useSelector, useDispatch } from 'react-redux'
-import { getAllCountries} from '../store/actions'
+import { getAllCountries } from '../store/actions'
 import { useEffect, useState  } from 'react'
 import '../css/home.css'
 

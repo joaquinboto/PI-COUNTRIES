@@ -13,7 +13,13 @@ function rootReducer(state = initialState, action) {
                 countries: action.payload
             }
             
-        default: return state    
+    case 'GET_DETAIL_COUNTRY':
+        return {
+            ...state,
+            detail: action.payload
+        }
+
+    default: return state    
     }
 }
 export default rootReducer;
