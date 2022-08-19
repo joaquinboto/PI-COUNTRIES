@@ -3,12 +3,26 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 80%;
     height: auto;
     border: 1px solid #ccc;
     border-radius: 5px;
+    color: white;
+    background-color: black;
+    transition: all 0.3s ease-in-out;
 }
 
 .card-icon {
-    width: 50%;
+    width: 60%;
+    object-fit: cover;
+    transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 10px #ccc;
+}
+
+.card-icon:hover {
+    transform: translateY(-10px);
 }

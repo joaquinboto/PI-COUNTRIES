@@ -1,5 +1,6 @@
 import React from 'react'
 import '../css/pagination.css'
+import { Link } from 'react-router-dom'
 
 export default function Paginado ({countriesPerPage, allCountries, paginado}) {
     const pageNumbers = [];
@@ -12,7 +13,7 @@ export default function Paginado ({countriesPerPage, allCountries, paginado}) {
              <ul className='ulPagination'>
                  { pageNumbers && pageNumbers.map(number =>(           
                  <li className='liPagination' key={number}> 
-                    <a onClick={()=> paginado(number)} >{number}</a>
+                    <Link className='aPagination' to={""} onClick={()=> paginado(number)}>{number}</Link>
                  </li>
             ))}
             </ul>

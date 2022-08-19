@@ -1,0 +1,30 @@
+.landing-page{
+    width: 100%;
+    height: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.btnLanding {
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.btnLanding:hover {
+    background-color: #45a049;
+    color: white;
+}
+
+.btnLanding a {
+    color: white;
+    text-decoration: none;
+}
