@@ -2,10 +2,20 @@ import React, { useEffect } from 'react'
 import NavBar from '../components/NavBar'
 import { useDispatch , useSelector } from 'react-redux'
 // import { Link } from 'react-router-dom'
-// import axios from 'axios'
+
 import { getAllCountries } from '../store/actions'
 
 export default function CreateActivity() {
+
+    //validacion formulario
+    const [form, setForm] = React.useState({
+        nombre: '',
+        dificultad: '',
+        duracion: '',
+        temporada: '',
+        countries: [],
+    })
+
 
     const dispatch = useDispatch()
     const countries = useSelector(state => state.countries)
@@ -14,16 +24,27 @@ export default function CreateActivity() {
         dispatch(getAllCountries())
     }
     ,[dispatch])
+
+    const handleChange = (e) => {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+    }
  
   return (
-      <div>
+      <>
         <NavBar/>
-        <div>
+        <div className="ActivityContainer">
             <h1>Create Activity</h1>
-            <form action="">
-                <input type="text" placeholder="Name" />
-                <input type="number" placeholder="Dificultad" />
-                <input type="number" placeholder="Duracion" />
+            <form action="" onSubmit={handleSubmit()}>
+                <input type="text" onChange={ () => handleChange()} placeholder="Name" />
+                <input type="number" onChange={ () => handleChange()} placeholder="Dificultad" />
+                <input type="number" onChange={() => handleChange()} placeholder="Duracion" />
                 <select name="Temporada" id="">
                     <option value="">Temporada</option>
                     <option value="Primavera">Primavera</option>
@@ -42,6 +63,6 @@ export default function CreateActivity() {
                 <input type="submit" value="Create" />
             </form>
         </div>
-    </div>
+    </>
   )
 }

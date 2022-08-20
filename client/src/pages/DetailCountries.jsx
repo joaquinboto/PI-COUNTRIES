@@ -10,7 +10,7 @@ export default function DetailCountries() {
 
     useEffect(() => {
       dispatch(getDetailCountry(id));
-  },[dispatch]);
+  },[dispatch, id]);
 
     const countries = useSelector(state => state.detail)
 

@@ -3,7 +3,7 @@ import Card from '../components/Card'
 import Paginado from '../components/Paginado'
 import NavBar from '../components/NavBar'
 import { useSelector, useDispatch } from 'react-redux'
-import { getAllCountries } from '../store/actions'
+import { getAllCountries,  filterCountriesByRegion } from '../store/actions'
 import { useEffect, useState  } from 'react'
 import '../css/home.css'
 
@@ -21,15 +21,21 @@ export default function Home() {
   const paginado = (pageNumber)=> {
    setCurrentPage(pageNumber)
   } 
-
   useEffect(()=>{
     dispatch(getAllCountries());
-   },[dispatch]);
+  },[dispatch]);
+  
+  const filterCountries = (e) => {
+      dispatch(filterCountriesByRegion(e.target.value))
+      setCurrentPage(1)
+  }
 
 
   return (
     <>
-        <NavBar />
+        <NavBar 
+        filterCountries={filterCountries}
+        />
         <div className='cardsContainer'>
            <Card countries={currentCountries} 
            loading={loading} />
