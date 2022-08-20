@@ -32,16 +32,14 @@ export default function CreateActivity() {
         })
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-    }
+ 
  
   return (
       <>
         <NavBar/>
         <div className="ActivityContainer">
             <h1>Create Activity</h1>
-            <form action="" onSubmit={handleSubmit()}>
+            <form action="" >
                 <input type="text" onChange={ () => handleChange()} placeholder="Name" />
                 <input type="number" onChange={ () => handleChange()} placeholder="Dificultad" />
                 <input type="number" onChange={() => handleChange()} placeholder="Duracion" />

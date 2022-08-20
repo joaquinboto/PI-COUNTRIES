@@ -31,3 +31,10 @@
     font-weight: bold;
     cursor: pointer;
 }
+
+.navOptions {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
