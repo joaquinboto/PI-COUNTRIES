@@ -3,7 +3,6 @@ import Card from '../components/Card'
 import Paginado from '../components/Paginado'
 import NavBar from '../components/NavBar'
 import { useSelector, useDispatch } from 'react-redux'
-import Loading from '../components/Loading'
 import { getAllCountries,  filterCountriesByRegion , orderByName , orderByPopulation  ,getNameCountry } from '../store/actions'
 import { useEffect, useState  } from 'react'
 import '../css/home.css'
@@ -28,9 +27,9 @@ export default function Home() {
 
   useEffect(()=>{
     dispatch(getAllCountries());
-    setLoading(false)
   },[dispatch]);
   
+
 
   //FilterCountries
   const filterCountries = (e) => {
@@ -58,6 +57,14 @@ export default function Home() {
   const searchCountries = (e) => {
     dispatch(getNameCountry(e))
   }
+
+  //Reset Filters
+  const resetFilters = () => {
+    dispatch(getAllCountries())
+    setOrder('')
+    setPopulation('')
+    setCurrentPage(1)
+  }
  
 
   return (
@@ -67,10 +74,11 @@ export default function Home() {
         sortedCountries={sortedCountries}
         orderByPopulations={orderByPopulations}
         searchCountries={searchCountries}
+        resetFilters={resetFilters}
         />
         <div className='cardsContainer'>
-          {loading ? <Loading/> : 
-          <Card countries={currentCountries}/>}
+          <Card countries={currentCountries}
+          loading={loading}/>
         </div>
         <div className='barPagination'>
             <Paginado
