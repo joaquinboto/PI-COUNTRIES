@@ -49,7 +49,7 @@ function rootReducer(state = initialState, action) {
           return 0;
         }
       }
-      return 'Ordered';
+      return 'Order';
     });
     return {
       ...state,
@@ -82,6 +82,13 @@ function rootReducer(state = initialState, action) {
         ...state,
         countries: orderedCountriesPopulation,
       };
+
+      case 'GET_NAME_COUNTRY': 
+      return {
+        ...state,
+        countries: action.payload
+      }
+      
 
 
     default: return state    

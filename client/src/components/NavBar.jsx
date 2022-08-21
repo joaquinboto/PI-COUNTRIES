@@ -1,8 +1,22 @@
-import React from 'react'
+import React, { useState} from 'react'
 import { Link } from 'react-router-dom'
 import '../css/navbar.css'
 
-export default function NavBar({filterCountries , sortedCountries , orderByPopulations }) {
+export default function NavBar({filterCountries , sortedCountries , orderByPopulations , searchCountries }) {
+
+  const [search , setSearch] = useState('')
+  const [ disabled, setDisabled] = useState(true)
+
+  const handleSearch = (e) => {
+    if(e.target.value.length > 0){
+      setDisabled(false)
+    } else {
+      setDisabled(true)
+    }
+    setSearch(e.target.value)
+  }
+
+
   return (
     <>
     <div className="nav">
@@ -60,6 +74,11 @@ export default function NavBar({filterCountries , sortedCountries , orderByPopul
             Least Populated
           </option>
         </select>
+      </div>
+      <div>
+        <h3>Search:</h3>
+        <input  type="text" onChange={(e) => handleSearch(e)} id="forSearch" placeholder="Search..." />
+        <button disabled={disabled} type='submit' onClick={() => searchCountries(search)} >Search</button>
       </div>
     </div>
     </>

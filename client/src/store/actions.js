@@ -12,19 +12,19 @@ export const getAllCountries = () => {
 }
 
 export const getNameCountry = (nombre) => {
+    const nuevoNombre = nombre[0].toUpperCase() + nombre.slice(1)
     return async dispatch => {
-
         try {
-            let pais = await axios.get(`http://localhost:3001/countries?nombre=${nombre}`)
+            let pais = await axios.get(`http://localhost:3001/countries?nombre=${nuevoNombre}`)
             return dispatch({
                 type: 'GET_NAME_COUNTRY',
                 payload: pais.data
             })
         } catch (error) {
-            console.log(error)
-            alert("No se encontro el pais")
+            if(error.response.status === 404) {
+             alert('No se encontro el pais')
+            }
         }
-
     }
 }
 

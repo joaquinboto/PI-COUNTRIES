@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react'
 import '../css/cards.css'
-import { useParams , Link } from 'react-router-dom'
+import { useParams , Link} from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { getDetailCountry } from '../store/actions'
+
 
 export default function DetailCountries() {
     const dispatch = useDispatch()
     const { id } = useParams()
+
 
     useEffect(() => {
       dispatch(getDetailCountry(id));
@@ -16,7 +18,7 @@ export default function DetailCountries() {
 
   return (
     countries ? (
-      <div>
+      <div className='countrieDetail'>
         <div className="card">
           <h1>{countries.nombre}</h1>
           <img className="card-icon" src={countries.bandera} alt="" srcset="" />
@@ -26,7 +28,10 @@ export default function DetailCountries() {
         </div>
         <Link to={"/home"}><button>Volver</button></Link>
       </div>
-      ) : (<div>'Loading...'</div>)
+      ) : (<div>
+        <h1>No se encontro el pais</h1>
+        <Link to={"/home"}><button>Volver</button></Link>
+      </div>)
   )
 }
 

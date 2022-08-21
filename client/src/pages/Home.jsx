@@ -4,7 +4,7 @@ import Paginado from '../components/Paginado'
 import NavBar from '../components/NavBar'
 import { useSelector, useDispatch } from 'react-redux'
 import Loading from '../components/Loading'
-import { getAllCountries,  filterCountriesByRegion , orderByName , orderByPopulation } from '../store/actions'
+import { getAllCountries,  filterCountriesByRegion , orderByName , orderByPopulation  ,getNameCountry } from '../store/actions'
 import { useEffect, useState  } from 'react'
 import '../css/home.css'
 
@@ -53,6 +53,11 @@ export default function Home() {
     dispatch(orderByPopulation(e.target.value))
     setPopulation(e);
   }
+
+  //Search
+  const searchCountries = (e) => {
+    dispatch(getNameCountry(e))
+  }
  
 
   return (
@@ -61,6 +66,7 @@ export default function Home() {
         filterCountries={filterCountries}
         sortedCountries={sortedCountries}
         orderByPopulations={orderByPopulations}
+        searchCountries={searchCountries}
         />
         <div className='cardsContainer'>
           {loading ? <Loading/> : 

@@ -4,13 +4,12 @@ const axios = require("axios");
 const { Country , Activity} = require('../db')
 
 router.get('/' , async (req, res) => {
-    const {name} = req.query
+    const {nombre} = req.query
     const allDB = await Country.findAll()
 
     try {
         // Get the country from the api endpoint
         const allCountries = await axios.get('https://restcountries.com/v3/all')
-
         !allDB.length && (await Country.bulkCreate(
         allCountries.data.map((e) => {
             return {
@@ -25,13 +24,17 @@ router.get('/' , async (req, res) => {
                 }
         })))
 
-        let resultado = name ? await Country.findAll({
-            where: {
-                nombre: name
-            }
-        }) : await Country.findAll()
-
-        return res.json(resultado)
+        // Get the country from query
+        if(!nombre) {
+            return res.status(200).send(allDB)
+        } else {
+            const country = await Country.findAll({
+                where: {
+                    nombre
+                }
+            })
+            country.length ? res.status(200).send(country) : res.status(404).send("No existe el pais")
+        }
 
     } catch (error) {
         return res.status(404).json(error)
