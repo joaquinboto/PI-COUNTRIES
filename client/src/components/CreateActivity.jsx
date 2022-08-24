@@ -1,14 +1,37 @@
-import React, { useEffect } from 'react'
-import NavBar from '../components/NavBar'
+import React, { useEffect , useState } from 'react'
 import { useDispatch , useSelector } from 'react-redux'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import '../css/activity.css'
+import { getAllCountries , addActivity } from '../store/actions'
 
-import { getAllCountries } from '../store/actions'
+
+function validate(input){   
+    let errors = {}
+    
+    console.log(input.dificultad)
+    if (!/[A-Za-z0-9]+/g.test(input.nombre) && !input.nombre) {
+      errors.nombre = 'Name is required';
+    } else if (!input.dificultad) {
+      errors.dificultad = 'Difficulty is required';
+    } else if (input.dificultad > 5 || input.dificultad <= 0) {
+        errors.dificultad = 'Numero debe ser menor a 5 y mayor a 0';
+    } else if (!input.duracion) {
+      errors.duracion = 'Duration is required';
+    } else if (!/^\d+$/.test(input.duracion)) {
+      errors.duracion = 'Duration must be a number';
+    } else if (!input.temporada) {
+      errors.temporada = 'Season is required';
+    } else if (input.countries.length === 0) {
+      errors.countries = 'At least one country is required';
+    }
+    console.log('ERROR', errors);
+    return errors;
+}
 
 export default function CreateActivity() {
 
     //validacion formulario
-    const [form, setForm] = React.useState({
+    const [form, setForm] = useState({
         nombre: '',
         dificultad: '',
         duracion: '',
@@ -16,6 +39,7 @@ export default function CreateActivity() {
         countries: [],
     })
 
+    const [errors , setErrors] = useState({error: "error"})
 
     const dispatch = useDispatch()
     const countries = useSelector(state => state.countries)
@@ -26,41 +50,105 @@ export default function CreateActivity() {
     ,[dispatch])
 
     const handleChange = (e) => {
-        setForm({
+        
+        
+        if(e.target.name === "countries") {
+            setForm({
+                ...form,
+                [e.target.name] : [...form.countries, e.target.value ] 
+            })
+        } else {
+            setForm({
+                ...form,
+                [e.target.name]: e.target.value
+            })
+        }
+        
+        setErrors(validate({
             ...form,
             [e.target.name]: e.target.value
-        })
+        }))
     }
 
- 
- 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if(Object.keys(errors).length === 0) {
+            dispatch(addActivity(form))
+            alert('Actividad agregada')
+        }   else {
+            alert('Ingrese todos los campos')
+        }
+    }
+
+    
+
   return (
       <>
-        <NavBar/>
+        <div className='navbarCreateActivity'>
+            <nav>
+                <h1>Crear Actividad</h1>
+                <Link to={"/home"}><button className='btnHomeCreate'>Home</button></Link>
+            </nav>
+        </div>
         <div className="ActivityContainer">
-            <h1>Create Activity</h1>
-            <form action="" >
-                <input type="text" onChange={ () => handleChange()} placeholder="Name" />
-                <input type="number" onChange={ () => handleChange()} placeholder="Dificultad" />
-                <input type="number" onChange={() => handleChange()} placeholder="Duracion" />
-                <select name="Temporada" id="">
-                    <option value="">Temporada</option>
-                    <option value="Primavera">Primavera</option>
-                    <option value="Verano">Verano</option>
-                    <option value="Otoño">Otoño</option>
-                    <option value="Invierno">Invierno</option>
-                </select>
-                <select name="Pais" id="">
-                    <option value="">Seleccione un Pais</option>
-                    {countries.map(country => {
-                        return (
-                            <option value={country.cca3} key={country.cca3}>{country.nombre}</option>
-                        )
-                    })}
-                </select>
-                <input type="submit" value="Create" />
+            <h1 style={{color: 'white'}}>Create Activity</h1>
+            <form action="" onSubmit={(e) => handleSubmit(e)} >
+                <div>
+                    <label >Nombre:</label>
+                    <input type="text" name='nombre' onChange={ (e) => handleChange(e)} placeholder="Name" />
+                </div>
+                <div>
+                    <label >Dificultad:</label>
+                    <input type="number" name='dificultad' onChange={ (e) => handleChange(e)} max="5" min="1" placeholder="Dificultad" />
+                </div>
+                <div>
+                    <label >Duracion:</label>
+                    <input type="number" name='duracion' onChange={ (e) => handleChange(e)} placeholder="Duracion" />
+                </div>
+                <div>
+                    <label>Temporada</label>
+                    <select defaultValue={'DEFAULT'} onChange={(e) => handleChange(e)} name="temporada" id="season">
+                        <option value="DEFAULT" disabled="disabled">
+                        Seleccione temporada
+                        </option>
+                        <option value="Primavera">Primavera</option>
+                        <option value="Verano">Verano</option>
+                        <option value="Otoño">Otoño</option>
+                        <option value="Invierno">Invierno</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Paises</label>
+                    <select defaultValue={'DEFAULT'} onChange={(e) => handleChange(e)}  name="countries" id="">
+                        <option value="DEFAULT" disabled="disabled">
+                        Seleccione Pais
+                        </option>
+                        {countries.map(country => {
+                            return (
+                                <option value={country.cca3} key={country.cca3}>{country.nombre}</option>
+                            )
+                        })}
+                    </select>
+                </div>
+                <input className='btnInputCreate' type="submit" value="Create" />
             </form>
         </div>
+            <div className='cardActivity'>
+                <section className='sectionCard'>
+                    <h1>Actividad:</h1>
+                    <div><strong>Nombre:</strong> {form.nombre} </div>
+                    <div><strong>Dificultad: </strong>{form.dificultad}  </div>
+                    <div><strong>Duracion:</strong> {form.duracion} min </div>
+                    <div><strong>Temporada: </strong>{form.temporada}</div>
+                    <div><strong>Codigo Pais:</strong> {form.countries.map(country => {
+                        return (
+                            <li key={country}>
+                                <Link style={{color: 'white'}} to={`/detail/${country}`} target="_blank">{country}</Link>
+                            </li>
+                        )
+                    })}</div>
+                </section>
+            </div>
     </>
   )
 }

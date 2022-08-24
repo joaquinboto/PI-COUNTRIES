@@ -2,7 +2,7 @@ import React, { useState} from 'react'
 import { Link } from 'react-router-dom'
 import '../css/navbar.css'
 
-export default function NavBar({filterCountries , resetFilters , sortedCountries , orderByPopulations , searchCountries }) {
+export default function NavBar({filterCountries , resetFilters , sortedCountries , orderByPopulations , searchCountries , allActivities , showActivity }) {
 
   const [search , setSearch] = useState('')
   const [ disabled, setDisabled] = useState(true)
@@ -76,20 +76,33 @@ export default function NavBar({filterCountries , resetFilters , sortedCountries
         </select>
       </div>
       <div>
-        <h3>Search:</h3>
         <input  type="text" onChange={(e) => handleSearch(e)} id="forSearch" placeholder="Search..." />
-        <button disabled={disabled} type='submit' onClick={() => searchCountries(search)} >Search</button>
+        <button  className='btnReset_Search' disabled={disabled} type='submit' onClick={() => searchCountries(search)} >Search</button>
       </div>
       <div>
-        <button onClick={() => {
+        <button className='btnReset_Search' onClick={() => {
           document.getElementById('forPopulation').value = 'DEFAULT'
           document.getElementById('forSorting').value = 'DEFAULT'
           document.getElementById('forContinents').value = 'DEFAULT'
           document.getElementById('forSearch').value = ''
+          document.getElementById('forActivity').value = 'DEFAULT'
           resetFilters()
           setSearch('')
           setDisabled(true)
         }}>Reset </button>
+      </div>
+      <div>
+        <label >Activities: </label>
+        <select defaultValue={'DEFAULT'} onChange={(e) => showActivity(e) } name="Activity" id="forActivity">
+          <option value="DEFAULT" disabled="disabled">
+            ---
+          </option>
+          {allActivities.map(activity => {
+            return (
+            <option key={activity.id} value={activity.nombre}>{activity.nombre}</option>
+            )
+          })}
+        </select>
       </div>
     </div>
     </>

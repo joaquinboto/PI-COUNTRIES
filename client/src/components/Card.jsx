@@ -1,5 +1,4 @@
 import React from 'react'
-// import Loading from '../components/Loading'
 import { Link } from 'react-router-dom'
 import Loading from '../components/Loading'
 import '../css/cards.css'
@@ -22,12 +21,7 @@ export default function Card({ countries , loading })  {
                 <h2>{country.nombre}</h2>
                 <p>Capital: {country.capital}</p>
                 <Link to={`/detail/${country.cca3}`}>
-                  <button className="learn-more">
-                  <span className="circle" aria-hidden="true">
-                  <span className="icon arrow"></span>
-                  </span>
-                  <span className="button-text">Learn More</span>
-                </button>
+                  <button className="btn-detail">Detalle</button>
                 </Link>
               </div>
           </div>

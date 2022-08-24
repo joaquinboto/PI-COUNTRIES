@@ -1,17 +1,15 @@
 const initialState = {
-    allCountries: [],
+    dbBackup: [],
     activities : [],
     countries: [],
 }
-
-
 
 function rootReducer(state = initialState, action) {
     switch (action.type) {
         case 'GET_ALL_COUNTRIES':
             return {
                 ...state, 
-                allCountries: action.payload,
+                dbBackup: action.payload,
                 countries: action.payload
             }
             
@@ -22,8 +20,8 @@ function rootReducer(state = initialState, action) {
         }
 
     case 'FILTER_COUNTRIES_BY_REGION': 
-            const allCountries = state.allCountries
-            const regionFilter = action.payload === 'All' ? allCountries : allCountries.filter(el => el.continente[0] === action.payload)
+            const dbBackup = state.dbBackup
+            const regionFilter = action.payload === 'All' ? dbBackup : dbBackup.filter(el => el.continente[0] === action.payload)
         return {
             ...state,
             countries: regionFilter
@@ -89,7 +87,27 @@ function rootReducer(state = initialState, action) {
         countries: action.payload
       }
       
+      case 'POST_ACTIVITY':
+        return {
+          ...state,
+          activities: [...state.activities, action.payload],
+        }
 
+      case 'GET_ALL_ACTIVITIES': 
+      return {
+        ...state,
+        activities: action.payload
+      }
+
+      case 'FILTER_ACTIVITY': 
+      let filter = state.dbBackup.filter((country)=>{
+        const activities = country.activities.map((a)=>a.nombre)
+        return activities.includes(action.payload)
+    })
+    return {
+      ...state,
+      countries: filter
+    }
 
     default: return state    
     }

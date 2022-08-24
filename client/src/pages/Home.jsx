@@ -3,7 +3,7 @@ import Card from '../components/Card'
 import Paginado from '../components/Paginado'
 import NavBar from '../components/NavBar'
 import { useSelector, useDispatch } from 'react-redux'
-import { getAllCountries,  filterCountriesByRegion , orderByName , orderByPopulation  ,getNameCountry } from '../store/actions'
+import { getAllCountries,  filterCountriesByRegion , orderByName , orderByPopulation  ,getNameCountry , getAllActivities, filterActivity } from '../store/actions'
 import { useEffect, useState  } from 'react'
 import '../css/home.css'
 
@@ -11,7 +11,8 @@ import '../css/home.css'
 export default function Home() {
   const dispatch = useDispatch()
   const allCountries = useSelector ((state)=> state.countries)
-  const [loading , setLoading] = useState(true)
+  const allActivities = useSelector ((state)=> state.activities)
+  const [loading] = useState(true)
 
 
   //Paginado
@@ -27,6 +28,7 @@ export default function Home() {
 
   useEffect(()=>{
     dispatch(getAllCountries());
+    dispatch(getAllActivities())
   },[dispatch]);
   
 
@@ -65,6 +67,12 @@ export default function Home() {
     setPopulation('')
     setCurrentPage(1)
   }
+
+  //Show Activity
+  const showActivity = (e) => {
+    dispatch(filterActivity(e.target.value))
+    setCurrentPage(1)
+  }
  
 
   return (
@@ -75,6 +83,8 @@ export default function Home() {
         orderByPopulations={orderByPopulations}
         searchCountries={searchCountries}
         resetFilters={resetFilters}
+        allActivities={allActivities}
+        showActivity={showActivity}
         />
         <div className='cardsContainer'>
           <Card countries={currentCountries}

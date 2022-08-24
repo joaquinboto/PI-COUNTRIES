@@ -8,12 +8,14 @@ import { BrowserRouter , Route , Routes } from 'react-router-dom';
 function App() {
   return (
       <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/activity" element={<Activity />} />
-        <Route path="/detail/:id" element={<DetailCountries />} />
-      </Routes>
+      <div>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/activity" element={<Activity />} />
+          <Route path="/detail/:id" element={<DetailCountries />} />
+        </Routes>
+      </div>
       </BrowserRouter>
   )
 }

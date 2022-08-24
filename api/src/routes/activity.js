@@ -2,21 +2,33 @@ const { Router } = require('express');
 const router = Router();
 const { Country , Activity} = require('../db')
 
-router.post('/', function (req, res) {
-    const { nombre , dificultad , duracion , temporada , pais } = req.body;
+router.post('/', async (req, res) => {
+    const { nombre , dificultad , duracion , temporada , countries } = req.body;
 
     try {
-        if (nombre && duracion && dificultad && temporada) {
-            const [activity , boolean] = Activity.findOrCreate({
-                where: {
-                    nombre
-                }
-            })
+        const newActivity = await Activity.create({
+            nombre,
+            dificultad,
+            duracion,
+            temporada
+        })
+        for (let i = 0; i < countries.length; i++) {
+            await newActivity.addCountries(countries[i]); 
+            console.log(countries[i]);      
         }
-
-
+        res.status(200).json(newActivity)
+    
     } catch (error) {
-        return res.status(404).send(error.message);
+        res.json(error)
+    }
+})
+
+router.get('/', async (req, res) => {
+    try {
+        const allActivitis = await Activity.findAll();
+        res.json(allActivitis)
+    } catch (error) {
+        res.json(error)
     }
 })
 

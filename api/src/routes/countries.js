@@ -5,7 +5,11 @@ const { Country , Activity} = require('../db')
 
 router.get('/' , async (req, res) => {
     const {nombre} = req.query
-    const allDB = await Country.findAll()
+    const allDB = await Country.findAll({
+        include: Activity,
+        atributes: ['nombre' , 'dificultad' , 'duracion' , 'temporada']
+
+    })
 
     try {
         // Get the country from the api endpoint
@@ -31,7 +35,8 @@ router.get('/' , async (req, res) => {
             const country = await Country.findAll({
                 where: {
                     nombre
-                }
+                } ,
+                include: Activity
             })
             country.length ? res.status(200).send(country) : res.status(404).send("No existe el pais")
         }
@@ -46,7 +51,9 @@ router.get('/' , async (req, res) => {
 router.get('/:id' , async (req, res) => {
     const { id } = req.params
     try {
-        let pais = await Country.findByPk(id)
+        let pais = await Country.findByPk(id , {
+            include: Activity,
+          })
         if (pais === null) {
             return res.status(404).json({error: 'No se encontro el pais'})
           } else {

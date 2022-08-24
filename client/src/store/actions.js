@@ -40,11 +40,15 @@ export const getAllActivities = () => {
 
 export const addActivity = (activity) => {
     return async dispatch => {
-        let actividad = await axios.post('http://localhost:3001/activities', activity)
-        return dispatch({
-            type: 'ADD_ACTIVITY',
-            payload: actividad.data
-        })
+        try {
+            let actividad = await axios.post('http://localhost:3001/activities', activity)
+            return dispatch({
+                type: 'POST_ACTIVITY',
+                payload: actividad.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
 
@@ -55,6 +59,13 @@ export const getDetailCountry = (id) => {
             type: 'GET_DETAIL_COUNTRY',
             payload: pais.data
         })
+    }
+}
+
+export const filterActivity = (activity) => {
+    return {
+        type: 'FILTER_ACTIVITY',
+        payload: activity
     }
 }
 

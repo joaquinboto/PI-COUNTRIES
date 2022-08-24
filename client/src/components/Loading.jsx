@@ -12,7 +12,7 @@ const options = {
   }
 }
 const style = {
-  width: "50%",
+  width: "20%",
 }
 
 export default function Loading() {
