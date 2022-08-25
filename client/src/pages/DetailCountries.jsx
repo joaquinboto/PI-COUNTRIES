@@ -42,7 +42,7 @@ export default function DetailCountries() {
                     <strong>Temporada: {c.temporada}</strong>
                   </div>
                 )
-              })}<Link to={"/"}>Regresar</Link> </div>}
+              })}<Link to={"/home"}>Regresar</Link> </div>}
               
               </span>
               

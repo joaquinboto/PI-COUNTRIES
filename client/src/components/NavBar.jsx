@@ -9,9 +9,7 @@ export default function NavBar({filterCountries , resetFilters , sortedCountries
   const [search , setSearch] = useState('')
   const [ disabled, setDisabled] = useState(true)
 
-  useEffect(() =>{
-    dispatch(searchTargetCountry(filterCountries))
-  },[dispatch])
+ 
 
   const handleSearch = (e) => {
     dispatch(searchTargetCountry(e.target.value))
