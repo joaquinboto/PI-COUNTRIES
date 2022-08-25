@@ -6,9 +6,7 @@ const { Country , Activity} = require('../db')
 router.get('/' , async (req, res) => {
     const {nombre} = req.query
     const allDB = await Country.findAll({
-        include: Activity,
-        atributes: ['nombre' , 'dificultad' , 'duracion' , 'temporada']
-
+        include: Activity
     })
 
     try {

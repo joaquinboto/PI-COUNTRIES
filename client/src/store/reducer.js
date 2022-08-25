@@ -1,7 +1,7 @@
 const initialState = {
     dbBackup: [],
     activities : [],
-    countries: [],
+    countries: []
 }
 
 function rootReducer(state = initialState, action) {
@@ -22,6 +22,7 @@ function rootReducer(state = initialState, action) {
     case 'FILTER_COUNTRIES_BY_REGION': 
             const dbBackup = state.dbBackup
             const regionFilter = action.payload === 'All' ? dbBackup : dbBackup.filter(el => el.continente[0] === action.payload)
+            
         return {
             ...state,
             countries: regionFilter
@@ -108,6 +109,15 @@ function rootReducer(state = initialState, action) {
       ...state,
       countries: filter
     }
+
+    case 'SEARCH_TARGET_COUNTRY':
+      const target = state.dbBackup
+      const nameFilter = target.filter(e => e.nombre.toUpperCase().includes(action.payload.toUpperCase()))
+
+      return {
+        ...state,
+        countries: nameFilter,
+      }
 
     default: return state    
     }

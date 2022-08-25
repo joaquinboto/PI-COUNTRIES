@@ -1,13 +1,20 @@
-import React, { useState} from 'react'
+import React, { useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
+import { searchTargetCountry } from '../store/actions'
 import '../css/navbar.css'
+import { useDispatch } from 'react-redux'
 
 export default function NavBar({filterCountries , resetFilters , sortedCountries , orderByPopulations , searchCountries , allActivities , showActivity }) {
-
+  const dispatch = useDispatch()
   const [search , setSearch] = useState('')
   const [ disabled, setDisabled] = useState(true)
 
+  useEffect(() =>{
+    dispatch(searchTargetCountry(filterCountries))
+  },[dispatch])
+
   const handleSearch = (e) => {
+    dispatch(searchTargetCountry(e.target.value))
     setSearch(e.target.value)
     if(e.target.value.length > 0){
       setDisabled(false)
@@ -15,6 +22,8 @@ export default function NavBar({filterCountries , resetFilters , sortedCountries
       setDisabled(true)
     }
   }
+
+
 
 
   return (

@@ -19,7 +19,7 @@ export default function Card({ countries , loading })  {
               </div>
               <div className="card-title">
                 <h2>{country.nombre}</h2>
-                <p>Capital: {country.capital}</p>
+                <p>Continente: {country.continente}</p>
                 <Link to={`/detail/${country.cca3}`}>
                   <button className="btn-detail">Detalle</button>
                 </Link>

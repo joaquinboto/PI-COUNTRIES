@@ -17,7 +17,8 @@ export default function Home() {
 
   //Paginado
   const [currentPage, setCurrentPage] = useState(1)
-  const [countriesPrePage] = useState(10)
+  let countriesPrePage;
+  currentPage === 1 ? countriesPrePage = 9 : countriesPrePage = 10
   const indexOfLastCountries = currentPage * countriesPrePage
   const indexOfFirstCountries = indexOfLastCountries - countriesPrePage
   const currentCountries = allCountries.slice(indexOfFirstCountries, indexOfLastCountries)
@@ -31,6 +32,7 @@ export default function Home() {
     dispatch(getAllActivities())
   },[dispatch]);
   
+
 
 
   //FilterCountries

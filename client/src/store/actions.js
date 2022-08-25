@@ -28,6 +28,13 @@ export const getNameCountry = (nombre) => {
     }
 }
 
+export const searchTargetCountry = (country) => {
+    return {
+        type: 'SEARCH_TARGET_COUNTRY',
+        payload: country
+    }
+}
+
 export const getAllActivities = () => {
     return async dispatch => {
         let actividades = await axios.get('http://localhost:3001/activities')

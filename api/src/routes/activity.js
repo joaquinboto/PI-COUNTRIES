@@ -6,17 +6,25 @@ router.post('/', async (req, res) => {
     const { nombre , dificultad , duracion , temporada , countries } = req.body;
 
     try {
-        const newActivity = await Activity.create({
-            nombre,
-            dificultad,
-            duracion,
-            temporada
-        })
-        for (let i = 0; i < countries.length; i++) {
-            await newActivity.addCountries(countries[i]); 
-            console.log(countries[i]);      
+        if(nombre && duracion && dificultad && temporada && countries) {
+            const newActivity = await Activity.create({
+                nombre,
+                dificultad,
+                duracion,
+                temporada
+            })
+            for (let i = 0; i < countries.length; i++) {
+                await newActivity.addCountries(countries[i]); 
+                console.log(countries[i]);      
+            }
+            res.status(200).json(newActivity)
+        } else {
+            res.status(400).json({
+                error: 'Ingrese todos los campos'
+            })
+
         }
-        res.status(200).json(newActivity)
+
     
     } catch (error) {
         res.json(error)
