@@ -94,12 +94,16 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    width: 30%;
-    height: 50%;
+    width: 500px;
+    height: auto;
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
     text-align: center;
     border-radius: 25px;
+}
+
+.sectionCard > div {
+    padding: 30px;
 }
 
 .sectionCard ul li {
@@ -131,3 +135,18 @@
     cursor: pointer;
 }
 
+.btnClose {
+    width: 30px;
+    height: 30px;
+    background-color: black;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+}

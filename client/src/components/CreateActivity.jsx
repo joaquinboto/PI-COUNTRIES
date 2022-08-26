@@ -36,7 +36,7 @@ export default function CreateActivity() {
         }else if (!input.dificultad) {
           errors.dificultad = 'Difficulty is required';
         } else if (input.dificultad > 5 || input.dificultad <= 0) {
-            errors.dificultad = 'Numero debe ser menor a 5 y mayor a 0';
+            errors.dificultad = 'Number must be less than 5 and greater than 0';
         } else if (!input.duracion) {
           errors.duracion = 'Duration is required';
         } else if (!/^\d+$/.test(input.duracion)) {
@@ -45,7 +45,7 @@ export default function CreateActivity() {
           errors.temporada = 'Season is required';
         } else if (input.countries.length === 0) {
           errors.countries = 'At least one country is required';
-        } else if (activities.find(e => e.nombre === input.nombre)) {
+        } else if (activities.find(e => e.nombre.toLowerCase() === input.nombre.toLowerCase() )) {
             errors.nombre = `Activity ${input.nombre} already exists`
         }
         console.log('ERROR', errors);
@@ -58,24 +58,43 @@ export default function CreateActivity() {
     ,[dispatch])
 
     const handleChange = (e) => {
-        
-        
-        if(e.target.name === "countries") {
-            setForm({
-                ...form,
-                [e.target.name] : [...form.countries, e.target.value ] 
-            })
-        } else {
+
             setForm({
                 ...form,
                 [e.target.name]: e.target.value
             })
-        }
-        
+
         setErrors(validate({
             ...form,
             [e.target.name]: e.target.value
         }))
+    }
+
+    const handleSelect = (e) => {
+        let nombre = e.target.value
+
+        if (Object.values(form.countries).includes(nombre)) {
+            alert('Countrie already exists')
+        } else {
+            setForm({
+                ...form,
+                countries: [...form.countries, nombre]
+            })
+
+            setErrors(validate({
+                ...form,
+                countries: [...form.countries, nombre]
+            }))
+        }
+    }
+
+    const removeSelect = (e) => {
+
+        setForm({
+            ...form,
+            countries: form.countries.filter(c => c !== e)
+        })
+        
     }
 
     const handleSubmit = (e) => {
@@ -104,14 +123,17 @@ export default function CreateActivity() {
                 <div>
                     <label >Nombre:</label>
                     <input type="text" name='nombre' onChange={ (e) => handleChange(e)} placeholder="Name" />
+                    {errors.nombre && (<p className='error'>{errors.nombre}</p>)}
                 </div>
                 <div>
                     <label >Dificultad:</label>
                     <input type="number" name='dificultad' onChange={ (e) => handleChange(e)} max="5" min="1" placeholder="Dificultad" />
+                    {errors.dificultad && (<p className='error'>{errors.dificultad}</p>)}
                 </div>
                 <div>
                     <label >Duracion:</label>
                     <input type="number" name='duracion' onChange={ (e) => handleChange(e)} placeholder="Duracion" />
+                    {errors.duracion && (<p className='error'>{errors.duracion}</p>)}
                 </div>
                 <div>
                     <label>Temporada</label>
@@ -124,10 +146,11 @@ export default function CreateActivity() {
                         <option value="Otoño">Otoño</option>
                         <option value="Invierno">Invierno</option>
                     </select>
+                    {errors.temporada && (<p className='error'>{errors.temporada}</p>)}
                 </div>
                 <div>
                     <label>Paises</label>
-                    <select defaultValue={'DEFAULT'} onChange={(e) => handleChange(e)}  name="countries" id="">
+                    <select defaultValue={'DEFAULT'} onChange={(e) => handleSelect(e)}  name="countries" id="">
                         <option value="DEFAULT" disabled="disabled">
                         Seleccione Pais
                         </option>
@@ -137,6 +160,7 @@ export default function CreateActivity() {
                             )
                         })}
                     </select>
+                    {errors.countries && (<p className='error'>{errors.countries}</p>)}
                 </div>
                 <input className='btnInputCreate' type="submit" value="Create" />
             </form>
@@ -150,9 +174,10 @@ export default function CreateActivity() {
                     <div><strong>Temporada: </strong>{form.temporada}</div>
                     <div><strong>Codigo Pais:</strong> {form.countries.map(country => {
                         return (
-                            <li key={country}>
+                            <div key={country}>
+                                <button className='btnClose' onClick={(e) => removeSelect(country)}>X</button>
                                 <Link style={{color: 'white'}} to={`/detail/${country}`} target="_blank">{country}</Link>
-                            </li>
+                            </div>
                         )
                     })}</div>
                 </section>
