@@ -3,7 +3,7 @@ import Card from '../components/Card'
 import Paginado from '../components/Paginado'
 import NavBar from '../components/NavBar'
 import { useSelector, useDispatch } from 'react-redux'
-import { getAllCountries,  filterCountriesByRegion , orderByName , orderByPopulation  ,getNameCountry , getAllActivities, filterActivity } from '../store/actions'
+import { getAllCountries, setPage , filterCountriesByRegion , orderByName , orderByPopulation ,getNameCountry , getAllActivities, filterActivity } from '../store/actions'
 import { useEffect, useState  } from 'react'
 import '../css/home.css'
 
@@ -11,20 +11,31 @@ import '../css/home.css'
 export default function Home() {
   const dispatch = useDispatch()
   const allCountries = useSelector ((state)=> state.countries)
+  const CountriesBackup = useSelector ((state)=> state.dbBackup)
+  const currentPage = useSelector ((state)=> state.currentPage)
   const allActivities = useSelector ((state)=> state.activities)
   const [loading] = useState(true)
 
 
   //Paginado
-  const [currentPage, setCurrentPage] = useState(1)
-  let countriesPrePage;
-  currentPage === 1 ? countriesPrePage = 9 : countriesPrePage = 10
-  const indexOfLastCountries = currentPage * countriesPrePage
-  const indexOfFirstCountries = indexOfLastCountries - countriesPrePage
-  const currentCountries = allCountries.slice(indexOfFirstCountries, indexOfLastCountries)
-  const paginado = (pageNumber)=> {
-   setCurrentPage(pageNumber)
-  } 
+  const countriesToShow = allCountries.length? allCountries : CountriesBackup;
+  const total = countriesToShow.length;
+  const maxPage = Math.floor(total/10) + 1;
+
+  function nextPage() {
+    dispatch(setPage(currentPage < maxPage ? currentPage + 1 : currentPage));
+  }
+  function previousPage() {
+    dispatch(setPage(currentPage > 1 ? currentPage - 1 : currentPage))
+  }
+  function buttonLeft() {
+    return currentPage === 1 ? ' ' : <button onClick={previousPage}>{'<<'}</button>
+  }
+  function buttonRight() {
+    return currentPage === maxPage ? ' ' : <button onClick={nextPage}>{'>>'}</button>
+  }
+
+  const currentCountries = countriesToShow.slice(currentPage === 1 ? 0 : currentPage * 10-11, currentPage*10 - 1);
 
 
   useEffect(()=>{
@@ -37,8 +48,8 @@ export default function Home() {
 
   //FilterCountries
   const filterCountries = (e) => {
+      dispatch(setPage(1))
       dispatch(filterCountriesByRegion(e.target.value))
-      setCurrentPage(1)
   }
 
   //SortedCountries
@@ -47,7 +58,8 @@ export default function Home() {
     if(allCountries.length > 0){
     dispatch(orderByName(e.target.value))
     setOrder(e);
-    setCurrentPage(1)}
+   
+  }
   }
 
   // Order by Population
@@ -59,21 +71,22 @@ export default function Home() {
 
   //Search
   const searchCountries = (e) => {
+    dispatch(setPage(1))
     dispatch(getNameCountry(e))
   }
 
   //Reset Filters
   const resetFilters = () => {
+    dispatch(setPage(1))
     dispatch(getAllCountries())
     setOrder('')
     setPopulation('')
-    setCurrentPage(1)
   }
 
   //Show Activity
   const showActivity = (e) => {
+    dispatch(setPage(1))
     dispatch(filterActivity(e.target.value))
-    setCurrentPage(1)
   }
  
 
@@ -94,9 +107,9 @@ export default function Home() {
         </div>
         <div className='barPagination'>
             <Paginado
-            countriesPerPage={countriesPrePage}
-            allCountries = {allCountries.length}
-            paginado = {paginado}
+            buttonLeft = {buttonLeft}
+            buttonRight = {buttonRight}
+            currentPage={currentPage}
             />
         </div>
     </>

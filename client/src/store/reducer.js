@@ -1,7 +1,8 @@
 const initialState = {
     dbBackup: [],
     activities : [],
-    countries: []
+    countries: [],
+    currentPage:1
 }
 
 function rootReducer(state = initialState, action) {
@@ -118,6 +119,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         countries: nameFilter,
       }
+
+     case 'SET_PAGE':
+      return {
+        ...state,
+        currentPage: action.payload
+      } 
 
     default: return state    
     }

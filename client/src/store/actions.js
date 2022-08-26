@@ -97,6 +97,14 @@ export const orderByPopulation = (population) => {
     }
 }
 
+export function setPage(newPage){
+    return function (dispatch){
+      dispatch({
+        type: 'SET_PAGE',
+        payload:newPage
+      })
+    }
+  }
 
 
 
