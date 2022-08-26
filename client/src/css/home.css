@@ -14,3 +14,15 @@
     gap: 25px;
     justify-items: center;
 }
+
+.btnPaginado {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border-radius: 30px;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+}

@@ -21,12 +21,9 @@ function rootReducer(state = initialState, action) {
         }
 
     case 'FILTER_COUNTRIES_BY_REGION': 
-            const dbBackup = state.dbBackup
-            const regionFilter = action.payload === 'All' ? dbBackup : dbBackup.filter(el => el.continente[0] === action.payload)
-            
         return {
             ...state,
-            countries: regionFilter
+            countries: action.payload === 'All' ? state.dbBackup : [...state.dbBackup].filter(el => el.continente[0] === action.payload)
         }
     
     case 'ORDER_BY_NAME': 

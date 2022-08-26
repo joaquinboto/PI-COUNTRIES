@@ -29,10 +29,10 @@ export default function Home() {
     dispatch(setPage(currentPage > 1 ? currentPage - 1 : currentPage))
   }
   function buttonLeft() {
-    return currentPage === 1 ? ' ' : <button onClick={previousPage}>{'<<'}</button>
+    return currentPage === 1 ? ' ' : <button className='btnPaginado' onClick={previousPage}>{'Previous'}</button>
   }
   function buttonRight() {
-    return currentPage === maxPage ? ' ' : <button onClick={nextPage}>{'>>'}</button>
+    return currentPage === maxPage ? ' ' : <button className='btnPaginado' onClick={nextPage}>{'Next'}</button>
   }
 
   const currentCountries = countriesToShow.slice(currentPage === 1 ? 0 : currentPage * 10-11, currentPage*10 - 1);

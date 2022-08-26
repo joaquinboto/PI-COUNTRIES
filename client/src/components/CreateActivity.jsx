@@ -5,28 +5,7 @@ import '../css/activity.css'
 import { getAllCountries , addActivity } from '../store/actions'
 
 
-function validate(input){   
-    let errors = {}
-    
-    console.log(input.dificultad)
-    if (!/[A-Za-z0-9]+/g.test(input.nombre) && !input.nombre) {
-      errors.nombre = 'Name is required';
-    } else if (!input.dificultad) {
-      errors.dificultad = 'Difficulty is required';
-    } else if (input.dificultad > 5 || input.dificultad <= 0) {
-        errors.dificultad = 'Numero debe ser menor a 5 y mayor a 0';
-    } else if (!input.duracion) {
-      errors.duracion = 'Duration is required';
-    } else if (!/^\d+$/.test(input.duracion)) {
-      errors.duracion = 'Duration must be a number';
-    } else if (!input.temporada) {
-      errors.temporada = 'Season is required';
-    } else if (input.countries.length === 0) {
-      errors.countries = 'At least one country is required';
-    }
-    console.log('ERROR', errors);
-    return errors;
-}
+
 
 export default function CreateActivity() {
 
@@ -43,6 +22,35 @@ export default function CreateActivity() {
 
     const dispatch = useDispatch()
     const countries = useSelector(state => state.countries)
+    const activities = useSelector(state => state.activities)
+
+    function validate(input){   
+        let errors = {}
+        
+        if(!input.nombre) {
+            errors.nombre = 'Name is required';
+        } else if (!(/^[a-zA-Z0-9!Ññ@#$%&*()_ ;:-]*$/.test(input.nombre))) {
+          errors.nombre = 'Character no valid';
+        } else if (!(/^[a-zA-ZÑñ].*/.test(input.nombre))) {
+            errors.nombre = 'Names cant begin with a number'
+        }else if (!input.dificultad) {
+          errors.dificultad = 'Difficulty is required';
+        } else if (input.dificultad > 5 || input.dificultad <= 0) {
+            errors.dificultad = 'Numero debe ser menor a 5 y mayor a 0';
+        } else if (!input.duracion) {
+          errors.duracion = 'Duration is required';
+        } else if (!/^\d+$/.test(input.duracion)) {
+          errors.duracion = 'Duration must be a number';
+        } else if (!input.temporada) {
+          errors.temporada = 'Season is required';
+        } else if (input.countries.length === 0) {
+          errors.countries = 'At least one country is required';
+        } else if (activities.find(e => e.nombre === input.nombre)) {
+            errors.nombre = `Activity ${input.nombre} already exists`
+        }
+        console.log('ERROR', errors);
+        return errors;
+    }
 
     useEffect(() => {
         dispatch(getAllCountries())
@@ -76,7 +84,7 @@ export default function CreateActivity() {
             dispatch(addActivity(form))
             alert('Actividad agregada')
         }   else {
-            alert('Ingrese todos los campos')
+            alert('Hay un error')
         }
     }
 
