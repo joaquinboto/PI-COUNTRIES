@@ -9,10 +9,6 @@
   },
   "author": "Henry",
   "license": "ISC",
-  "engines": {
-    "node": "16.15.1",
-    "npm": ">=6.14.6"
-  },
   "dependencies": {
     "axios": "^0.27.2",
     "body-parser": "^1.19.0",
