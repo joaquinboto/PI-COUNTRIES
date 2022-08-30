@@ -1,6 +1,6 @@
 import React, { useEffect , useState } from 'react'
 import { useDispatch , useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import '../css/activity.css'
 import { getAllCountries , addActivity } from '../store/actions'
 
@@ -19,7 +19,7 @@ export default function CreateActivity() {
     })
 
     const [errors , setErrors] = useState({error: "error"})
-
+    const navigateHome = useNavigate();
     const dispatch = useDispatch()
     const countries = useSelector(state => state.countries)
     const activities = useSelector(state => state.activities)
@@ -89,11 +89,14 @@ export default function CreateActivity() {
     }
 
     const removeSelect = (e) => {
-
+        let newContries = form.countries
+        newContries.splice(newContries.indexOf(e), 1)
         setForm({
             ...form,
-            countries: form.countries.filter(c => c !== e)
+            countries: newContries
         })
+
+        setErrors(validate(form))
         
     }
 
@@ -102,6 +105,7 @@ export default function CreateActivity() {
         if(Object.keys(errors).length === 0) {
             dispatch(addActivity(form))
             alert('Actividad agregada')
+            navigateHome("/home")
         }   else {
             alert('Hay un error')
         }

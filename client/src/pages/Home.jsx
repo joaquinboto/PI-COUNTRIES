@@ -38,6 +38,7 @@ export default function Home() {
   const currentCountries = countriesToShow.slice(currentPage === 1 ? 0 : currentPage * 10-11, currentPage*10 - 1);
 
 
+
   useEffect(()=>{
     dispatch(getAllCountries());
     dispatch(getAllActivities())
