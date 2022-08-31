@@ -37,8 +37,12 @@ export default function CreateActivity() {
           errors.dificultad = 'Difficulty is required';
         } else if (input.dificultad > 5 || input.dificultad <= 0) {
             errors.dificultad = 'Number must be less than 5 and greater than 0';
-        } else if (!input.duracion) {
+        } else if ((!/^\d+$/.test(input.dificultad))) {
+            errors.dificultad = 'Difficulty must be a number';
+        }else if (!input.duracion) {
           errors.duracion = 'Duration is required';
+        } else if (input.duracion > 120 || input.duracion <= 0) {   
+        errors.duracion = 'Duration must be less than 120 and greater than 0';
         } else if (!/^\d+$/.test(input.duracion)) {
           errors.duracion = 'Duration must be a number';
         } else if (!input.temporada) {
@@ -72,7 +76,6 @@ export default function CreateActivity() {
 
     const handleSelect = (e) => {
         let nombre = e.target.value
-
         if (Object.values(form.countries).includes(nombre)) {
             alert('Countrie already exists')
         } else {
@@ -136,7 +139,7 @@ export default function CreateActivity() {
                 </div>
                 <div>
                     <label >Duracion:</label>
-                    <input type="number" name='duracion' onChange={ (e) => handleChange(e)} placeholder="Duracion" />
+                    <input type="number" name='duracion' onChange={ (e) => handleChange(e)} max="120" min="0" placeholder="Duracion" />
                     {errors.duracion && (<p className='error'>{errors.duracion}</p>)}
                 </div>
                 <div>

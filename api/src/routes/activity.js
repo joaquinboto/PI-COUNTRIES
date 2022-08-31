@@ -14,8 +14,7 @@ router.post('/', async (req, res) => {
                 temporada
             })
             for (let i = 0; i < countries.length; i++) {
-                await newActivity.addCountries(countries[i]); 
-                console.log(countries[i]);      
+                await newActivity.addCountries(countries[i]);   
             }
             res.status(200).json(newActivity)
         } else {
@@ -27,7 +26,7 @@ router.post('/', async (req, res) => {
 
     
     } catch (error) {
-        res.json(error)
+        res.json(error.messages)
     }
 })
 
