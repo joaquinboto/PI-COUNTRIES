@@ -32,7 +32,9 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        const allActivitis = await Activity.findAll();
+        const allActivitis = await Activity.findAll({
+            include: Country
+        });
         res.json(allActivitis)
     } catch (error) {
         res.json(error)

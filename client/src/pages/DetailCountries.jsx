@@ -33,7 +33,7 @@ export default function DetailCountries() {
               <div><strong>Subregion: {countries.subregion}</strong></div>
               <div><strong>Codigo del pais: {countries.cca3}</strong></div>
           </div>
-              <span>{countries.activities.length === 0 ? <div><h1>No tiene Actividades</h1><Link to={"/"}>Regresar</Link>  </div> : <div>Actividades: {countries.activities.map(c => {
+              <span>{countries.activities.length === 0 ? <div><h1>No tiene Actividades</h1><Link to={"/home"}>Regresar</Link>  </div> : <div>Actividades: {countries.activities.map(c => {
                 return (
                   <div className='infoActivity' key={c.nombre}>
                     <strong>Nombre: {c.nombre}</strong>

@@ -13,12 +13,12 @@ export default function Home() {
   const allCountries = useSelector ((state)=> state.countries)
   const currentPage = useSelector ((state)=> state.currentPage)
   const allActivities = useSelector ((state)=> state.activities)
+  const allFilters = useSelector ((state)=> state.allFilters)
   const [loading] = useState(true)
 
 
   //Paginado
   const total = allCountries.length;
-  console.log(total)
   const maxPage = Math.floor(total/10) + 1;
 
   function nextPage() {
@@ -51,9 +51,6 @@ export default function Home() {
     return <button className='btnPaginado' onClick={lastPage}>Last</button>
   }
 
-
-
-
   const currentCountries = allCountries.slice(currentPage === 1 ? 0 : currentPage * 10-11, currentPage * 10 - 1);
 
 
@@ -68,45 +65,57 @@ export default function Home() {
 
   //FilterCountries
   const filterCountries = (e) => {
+    let obj = {
+      ...allFilters,
+      byContinent: e.target.value
+    }
       dispatch(setPage(1))
-      dispatch(filterCountriesByRegion(e.target.value))
+      dispatch(filterCountriesByRegion(obj))
   }
 
   //SortedCountries
-  const [order, setOrder] = useState('');
   const sortedCountries = (e) => {
     if(allCountries.length > 0){
-    dispatch(orderByName(e.target.value))
-    setOrder(e);
-   
-  }
-  }
+      let obj = {
+        ...allFilters,
+        byName: e.target.value,
+      }
+    dispatch(orderByName(obj))
+    }}
 
   // Order by Population
-  const [population, setPopulation] = useState('');
   const orderByPopulations = (e) => {
-    dispatch(orderByPopulation(e.target.value))
-    setPopulation(e);
+    let obj = {
+      ...allFilters,
+      byPopulation: e.target.value,
+    }
+    dispatch(orderByPopulation(obj))
   }
 
   //Search
   const searchCountries = (e) => {
     dispatch(setPage(1))
-    dispatch(getNameCountry(e))
+    let obj = {
+      ...allFilters,
+      bySearch: e
+    }
+    dispatch(getNameCountry(obj))
   }
 
   //Reset Filters
   const resetFilters = () => {
     dispatch(setPage(1))
     dispatch(getAllCountries())
-    setOrder('')
-    setPopulation('')
   }
 
   //Show Activity
   const showActivity = (e) => {
+    let obj = {
+      ...allFilters,
+      byActivity: e.target.value,
+    }
     dispatch(setPage(1))
-    dispatch(filterActivity(e.target.value))
+    dispatch(filterActivity(obj))
   }
  
 
@@ -122,8 +131,9 @@ export default function Home() {
         showActivity={showActivity}
         />
         <div className='cardsContainer'>
-          <Card countries={currentCountries}
-          loading={loading}/>
+          {currentCountries.length > 0 ? <Card countries={currentCountries}
+          loading={loading}/> : <p>No se encontro el pais</p> }
+          
         </div>
         <div className='barPagination'>
             <Paginado

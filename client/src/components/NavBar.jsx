@@ -8,22 +8,22 @@ export default function NavBar({filterCountries , resetFilters , sortedCountries
   const dispatch = useDispatch()
   const [search , setSearch] = useState('')
   const [ disabled, setDisabled] = useState(true)
-
+  const allFilters = useSelector ((state)=> state.allFilters)
  
 
   const handleSearch = (e) => {
-    dispatch(searchTargetCountry(e.target.value))
+    let obj = {
+      ...allFilters,
+      bySearch: e.target.value
+    }
+    dispatch(searchTargetCountry(obj))
     setSearch(e.target.value)
     if(e.target.value.length > 0){
       setDisabled(false)
-     
     } else {
       setDisabled(true)
     }
   }
-
-
-
 
   return (
     <>
