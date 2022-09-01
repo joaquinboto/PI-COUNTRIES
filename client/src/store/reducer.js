@@ -56,11 +56,10 @@ function rootReducer(state = initialState, action) {
               } 
 
         case 'FILTER_COUNTRIES_BY_REGION':
-            const filterCountry = handleCurrentCountries(state.dbBackup , action.payload)
             return {
                 ...state,
                 allFilters: action.payload,
-                countries: filterCountry
+                countries: handleCurrentCountries(state.dbBackup , action.payload)
             }
         case 'ORDER_BY_NAME':
           return {
@@ -89,6 +88,18 @@ function rootReducer(state = initialState, action) {
             countries: handleCurrentCountries(state.dbBackup , action.payload)
             }
 
+        case 'GET_ALL_CLEAR':
+          return {
+            ...state,
+            allFilters: {
+              byName: '',
+              byContinent: 'All',
+              byPopulation: '',
+              byActivity: '',
+              bySearch: '',
+            }
+          }
+        
     default: return state    
     }
 }

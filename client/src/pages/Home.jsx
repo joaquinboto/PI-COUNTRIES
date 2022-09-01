@@ -3,7 +3,7 @@ import Card from '../components/Card'
 import Paginado from '../components/Paginado'
 import NavBar from '../components/NavBar'
 import { useSelector, useDispatch } from 'react-redux'
-import { getAllCountries, setPage , filterCountriesByRegion , orderByName , orderByPopulation ,getNameCountry , getAllActivities, filterActivity } from '../store/actions'
+import { getAllCountries, setPage, allClear , filterCountriesByRegion , orderByName , orderByPopulation ,getNameCountry , getAllActivities, filterActivity } from '../store/actions'
 import { useEffect, useState  } from 'react'
 import '../css/home.css'
 
@@ -58,6 +58,9 @@ export default function Home() {
   useEffect(()=>{
     dispatch(getAllCountries());
     dispatch(getAllActivities())
+    return () => {
+      dispatch(allClear());
+    };
   },[dispatch]);
   
 

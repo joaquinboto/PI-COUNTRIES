@@ -1,6 +1,6 @@
 import React, { useState} from 'react'
 import { Link } from 'react-router-dom'
-import { searchTargetCountry } from '../store/actions'
+import { searchTargetCountry , allClear} from '../store/actions'
 import '../css/navbar.css'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -97,6 +97,7 @@ export default function NavBar({filterCountries , resetFilters , sortedCountries
           resetFilters()
           setSearch('')
           setDisabled(true)
+          dispatch(allClear());
         }}>Reset </button>
       </div>
       <div>

@@ -108,6 +108,12 @@ export const setPage = (newPage) => async (dispatch) => {
       })
   }
 
+  export const allClear = () => async (dispatch) => {
+    return dispatch({ 
+        type: "GET_ALL_CLEAR" 
+    });
+  };
+
 
 
 
