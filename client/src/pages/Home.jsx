@@ -11,15 +11,14 @@ import '../css/home.css'
 export default function Home() {
   const dispatch = useDispatch()
   const allCountries = useSelector ((state)=> state.countries)
-  const CountriesBackup = useSelector ((state)=> state.dbBackup)
   const currentPage = useSelector ((state)=> state.currentPage)
   const allActivities = useSelector ((state)=> state.activities)
   const [loading] = useState(true)
 
 
   //Paginado
-  const countriesToShow = allCountries.length? allCountries : CountriesBackup;
-  const total = countriesToShow.length;
+  const total = allCountries.length;
+  console.log(total)
   const maxPage = Math.floor(total/10) + 1;
 
   function nextPage() {
@@ -28,6 +27,15 @@ export default function Home() {
   function previousPage() {
     dispatch(setPage(currentPage > 1 ? currentPage - 1 : currentPage))
   }
+
+  function firstPage() {
+    dispatch(setPage(1))
+  }
+
+  function lastPage() {
+    dispatch(setPage(maxPage))
+  }
+
   function buttonLeft() {
     return currentPage === 1 ? ' ' : <button className='btnPaginado' onClick={previousPage}>{'Previous'}</button>
   }
@@ -35,7 +43,18 @@ export default function Home() {
     return currentPage === maxPage ? ' ' : <button className='btnPaginado' onClick={nextPage}>{'Next'}</button>
   }
 
-  const currentCountries = countriesToShow.slice(currentPage === 1 ? 0 : currentPage * 10-11, currentPage*10 - 1);
+  function buttonFirst() {
+    return currentPage === 1 ? ' ' : <button className='btnPaginado' onClick={firstPage}>{'First'}</button>
+  }
+
+  function buttonLast () {
+    return <button className='btnPaginado' onClick={lastPage}>Last</button>
+  }
+
+
+
+
+  const currentCountries = allCountries.slice(currentPage === 1 ? 0 : currentPage * 10-11, currentPage * 10 - 1);
 
 
 
@@ -110,6 +129,8 @@ export default function Home() {
             <Paginado
             buttonLeft = {buttonLeft}
             buttonRight = {buttonRight}
+            buttonLast = {buttonLast}
+            buttonFirst={buttonFirst}
             currentPage={currentPage}
             />
         </div>

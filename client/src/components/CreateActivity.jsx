@@ -24,6 +24,7 @@ export default function CreateActivity() {
     const countries = useSelector(state => state.countries)
     const activities = useSelector(state => state.activities)
 
+
     function validate(input){   
         let errors = {}
         

@@ -8,7 +8,7 @@ export default function NavBar({filterCountries , resetFilters , sortedCountries
   const dispatch = useDispatch()
   const [search , setSearch] = useState('')
   const [ disabled, setDisabled] = useState(true)
-  const countries = useSelector(state => state.countries)
+
  
 
   const handleSearch = (e) => {
@@ -108,7 +108,6 @@ export default function NavBar({filterCountries , resetFilters , sortedCountries
           {allActivities.map(activity => {
             return (
             <option key={activity.id} value={activity.nombre}>{activity.nombre}</option>
-
             )
           })}
         </select>
