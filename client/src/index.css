@@ -49,4 +49,5 @@ select {
     text-indent: 0.01px;
     text-overflow: "";
     cursor: pointer;
+    max-width: 200px;
 }

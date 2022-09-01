@@ -1,28 +1,27 @@
-export const orderByName = (array, orderBy) => {
-    if (orderBy === "asc") {
-      array = array.slice().sort((a, b) => {
-        var nameA = a.nombre.toUpperCase();
-        var nameB = b.nombre.toUpperCase();
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
+export const orderByName = (array, byName) => {
+  
+  const orderedCountries = array.sort((a, b) => {
+    if (byName === 'asc') {
+      if (a.nombre < b.nombre) {
+        return -1;
+      } else if (a.nombre > b.nombre) {
+        return 1;
+      } else {
         return 0;
-      });
-    } else if (orderBy === "desc") {
-      array = array.slice().sort((a, b) => {
-        var nameA = a.nombre.toUpperCase();
-        var nameB = b.nombre.toUpperCase();
-        if (nameA > nameB) {
-          return -1;
-        }
-        if (nameA < nameB) {
-          return 1;
-        }
+      }
+    } else if (byName === 'desc') {
+      if (a.nombre > b.nombre) {
+        return -1;
+      } else if (a.nombre < b.nombre) {
+        return 1;
+      } else {
         return 0;
-      });
-    } 
-    return array;
-  };
+      }
+    }
+    return 'Order';
+  });
+
+  return orderedCountries;
+
+};
+
