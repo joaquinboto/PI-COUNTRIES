@@ -63,11 +63,10 @@ function rootReducer(state = initialState, action) {
                 countries: filterCountry
             }
         case 'ORDER_BY_NAME':
-            const order = handleCurrentCountries(state.dbBackup , action.payload)
           return {
                 ...state,
                 allFilters: action.payload,
-                countries: order
+                countries: handleCurrentCountries(state.dbBackup , action.payload)
             };
 
         case 'ORDER_BY_POPULATION' :
