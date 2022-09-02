@@ -73,11 +73,11 @@ export const filterActivity = (activity) => async (dispatch) => {
     })
 }
 
-export const filterCountriesByRegion = (region) => {
-    return {
+export const filterCountriesByRegion = (region) => async (dispatch) => {
+    return dispatch({
         type: 'FILTER_COUNTRIES_BY_REGION',
         payload: region
-    }
+    })
 }
 
 export const orderByName = (value) => async (dispatch) => {

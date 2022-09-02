@@ -67,9 +67,15 @@ export default function NavBar({filterCountries , resetFilters , sortedCountries
         </option>
         <option value="asc">A-Z</option>
         <option value="desc">Z-A</option>
+        <option value="most">
+            Most Populated
+          </option>
+          <option value="least">
+            Least Populated
+          </option>
       </select>
       </div>
-      <div>
+      {/* <div>
         <h3>Order by Population:</h3>
         <select defaultValue={'DEFAULT'}  id="forPopulation" onChange={(e) => orderByPopulations(e)}>
           <option value="DEFAULT" disabled="disabled">
@@ -82,14 +88,14 @@ export default function NavBar({filterCountries , resetFilters , sortedCountries
             Least Populated
           </option>
         </select>
-      </div>
+      </div> */}
       <div>
         <input  type="text" onChange={(e) => handleSearch(e)} id="forSearch" placeholder="Search..." />
         <button  className='btnReset_Search' disabled={disabled} type='submit' onClick={() => searchCountries(search)} >Search</button>
       </div>
       <div>
         <button className='btnReset_Search' onClick={() => {
-          document.getElementById('forPopulation').value = 'DEFAULT'
+          // document.getElementById('forPopulation').value = 'DEFAULT'
           document.getElementById('forSorting').value = 'DEFAULT'
           document.getElementById('forContinents').value = 'DEFAULT'
           document.getElementById('forSearch').value = ''

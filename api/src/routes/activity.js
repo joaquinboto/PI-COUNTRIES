@@ -13,9 +13,9 @@ router.post('/', async (req, res) => {
                 duracion,
                 temporada
             })
-            for (let i = 0; i < countries.length; i++) {
-                await newActivity.addCountries(countries[i]);   
-            }
+
+            await newActivity.addCountries(countries);   
+
             res.status(200).json(newActivity)
         } else {
             res.status(400).json({
@@ -24,7 +24,6 @@ router.post('/', async (req, res) => {
 
         }
 
-    
     } catch (error) {
         res.json(error.messages)
     }
@@ -35,6 +34,7 @@ router.get('/', async (req, res) => {
         const allActivitis = await Activity.findAll({
             include: Country
         });
+
         res.json(allActivitis)
     } catch (error) {
         res.json(error)
