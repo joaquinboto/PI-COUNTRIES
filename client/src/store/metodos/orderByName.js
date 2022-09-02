@@ -1,5 +1,4 @@
 export const orderByName = (array, byName) => {
-  console.log("orderbyName" , array , byName)
   const orderedCountries = array.sort((a, b) => {
     if (byName === 'asc') {
       if (a.nombre < b.nombre) {

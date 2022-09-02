@@ -48,7 +48,7 @@ export default function Home() {
   }
 
   function buttonLast () {
-    return <button className='btnPaginado' onClick={lastPage}>Last</button>
+    return currentPage === maxPage ? ' ' : <button className='btnPaginado' onClick={lastPage}>Last</button> 
   }
 
   const currentCountries = allCountries.slice(currentPage === 1 ? 0 : currentPage * 10-11, currentPage * 10 - 1);
@@ -109,6 +109,7 @@ export default function Home() {
   const resetFilters = () => {
     dispatch(setPage(1))
     dispatch(getAllCountries())
+    dispatch(allClear())
   }
 
   //Show Activity
@@ -135,7 +136,7 @@ export default function Home() {
         />
         <div className='cardsContainer'>
           {currentCountries.length > 0 ? <Card countries={currentCountries}
-          loading={loading}/> : <p>No se encontro el pais</p> }
+          loading={loading}/> : <p style={{color: "white"}}>No se encontro el pais</p> }
           
         </div>
         <div className='barPagination'>

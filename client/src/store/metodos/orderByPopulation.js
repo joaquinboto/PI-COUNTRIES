@@ -1,5 +1,4 @@
 export const orderByPopulation = (array , byPopulation) => {
-  console.log("orderbyPopulation" , array , byPopulation)
     const orderedCountriesPopulation =  array.sort((a, b) => {
         if (byPopulation === 'least') {
           if (a.poblacion < b.poblacion) {

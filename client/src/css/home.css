@@ -4,6 +4,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 8px;
+    color: #a52a2a;
 }
 
 .cardsContainer {
@@ -22,7 +24,7 @@
     align-items: center;
     padding: 5px;
     border-radius: 30px;
-    background: #000;
+    background: #0A9396;
     color: #fff;
     cursor: pointer;
 }

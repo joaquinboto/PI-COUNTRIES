@@ -4,12 +4,8 @@ import flagLoading from "../assets/89993-flag.json";
 import '../css/loader.css'
 
 const options = {
-  loop: true,
   autoplay: true,
-  animationData: flagLoading,
-  rendererSettings: {
-    preserveAspectRatio: "xMidYMid slice"
-  }
+  animationData: flagLoading
 }
 const style = {
   width: "20%",

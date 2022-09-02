@@ -2,6 +2,7 @@ const { Router } = require('express');
 const router = Router();
 const axios = require("axios");
 const { Country , Activity} = require('../db')
+const { Op } = require("sequelize");
 
 router.get('/' , async (req, res) => {
     const {nombre} = req.query
@@ -32,7 +33,7 @@ router.get('/' , async (req, res) => {
         } else {
             const country = await Country.findAll({
                 where: {
-                    nombre
+                    nombre: { [Op.startsWith]: nombre }
                 } ,
                 include: Activity
             })

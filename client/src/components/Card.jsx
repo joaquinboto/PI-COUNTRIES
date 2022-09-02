@@ -1,13 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Loading from '../components/Loading'
 import '../css/cards.css'
 
 export default function Card({ countries , loading })  {
-
-  if (loading && countries.length === 0) {
-    return <Loading />
-  }
 
   return (
     <>
