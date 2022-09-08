@@ -29,14 +29,14 @@ export default function NavBar({filterCountries , resetFilters , sortedCountries
     <>
     <div className="nav">
       <nav className="navbar">
-        <ul>
-          <Link to={'/'}>
+        <ul className='ulResponsive'>
+          <Link className='iResponsive' to={'/'}>
             <li>Home</li>
           </Link>
-          <Link to={'/home'}>
+          <Link className='iResponsive' to={'/home'}>
             <li>Countries</li>
           </Link>
-          <Link to={'/activity'}>
+          <Link className='iResponsive' to={'/activity'}>
             <li>Create Activity</li>
           </Link>
         </ul>
@@ -75,27 +75,12 @@ export default function NavBar({filterCountries , resetFilters , sortedCountries
           </option>
       </select>
       </div>
-      {/* <div>
-        <h3>Order by Population:</h3>
-        <select defaultValue={'DEFAULT'}  id="forPopulation" onChange={(e) => orderByPopulations(e)}>
-          <option value="DEFAULT" disabled="disabled">
-            ---
-          </option>
-          <option value="most">
-            Most Populated
-          </option>
-          <option value="least">
-            Least Populated
-          </option>
-        </select>
-      </div> */}
       <div>
         <input  type="text" onChange={(e) => handleSearch(e)} id="forSearch" placeholder="Search..." />
         <button  className='btnReset_Search' disabled={disabled} type='submit' onClick={() => searchCountries(search)} >Search</button>
       </div>
       <div>
         <button className='btnReset_Search' onClick={() => {
-          // document.getElementById('forPopulation').value = 'DEFAULT'
           document.getElementById('forSorting').value = 'DEFAULT'
           document.getElementById('forContinents').value = 'DEFAULT'
           document.getElementById('forSearch').value = ''
@@ -106,7 +91,7 @@ export default function NavBar({filterCountries , resetFilters , sortedCountries
         }}>Reset </button>
       </div>
       <div>
-        <label >Activities: </label>
+        <h3>Activities: </h3>
         <select defaultValue={'DEFAULT'} onChange={(e) => showActivity(e) } name="Activity" id="forActivity">
           <option value="DEFAULT" disabled="disabled">
             ---
